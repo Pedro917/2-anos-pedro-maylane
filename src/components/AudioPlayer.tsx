@@ -1,13 +1,12 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { Play, Pause, Volume2, VolumeX } from 'lucide-react'
+import { Play, Pause } from 'lucide-react'
 
 export default function AudioPlayer() {
   const [isPlaying, setIsPlaying] = useState(true) 
-  const [volume, setVolume] = useState(0.2)
-  const [isMuted, setIsMuted] = useState(false)
-  const [previousVolume, setPreviousVolume] = useState(0.2)
+  const [volume] = useState(0.2)
+  const [isMuted] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
 
   useEffect(() => {
@@ -64,16 +63,6 @@ export default function AudioPlayer() {
         })
       }
       setIsPlaying(!isPlaying)
-    }
-  }
-
-  const toggleMute = () => {
-    if (isMuted) {
-      setIsMuted(false)
-      setVolume(previousVolume)
-    } else {
-      setPreviousVolume(volume)
-      setIsMuted(true)
     }
   }
 
