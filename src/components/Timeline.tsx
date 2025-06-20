@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { X, Heart } from 'lucide-react'
 
 interface TimelineEvent {
@@ -130,6 +130,20 @@ const timelineEvents: TimelineEvent[] = [
 
 export default function Timeline() {
   const [selectedEvent, setSelectedEvent] = useState<TimelineEvent | null>(null)
+
+  // Bloquear scroll quando modal estiver aberto
+  useEffect(() => {
+    if (selectedEvent) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+
+    // Cleanup: restaurar scroll quando componente for desmontado
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [selectedEvent])
 
   const handleOpenModal = (event: TimelineEvent) => {
     setSelectedEvent(event)

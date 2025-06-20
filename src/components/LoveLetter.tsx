@@ -1,12 +1,26 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Heart, X } from 'lucide-react'
 
 export default function LoveLetter() {
   const [isOpen, setIsOpen] = useState(false)
   const [showLetter, setShowLetter] = useState(false)
+
+  // Bloquear scroll quando modal estiver aberto
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+
+    // Cleanup: restaurar scroll quando componente for desmontado
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isOpen])
 
   const handleOpenLetter = () => {
     setIsOpen(true)
